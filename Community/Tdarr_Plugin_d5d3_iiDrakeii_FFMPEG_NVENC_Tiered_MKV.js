@@ -45,6 +45,46 @@ function plugin(file) {
 //codec will be checked so it can be transcoded correctly
   if(file.video_resolution === "480p" || file.video_resolution === "576p" ) {
     if (file.video_codec_name == 'h263') {
+      response.preset = `-c:v h263_cuvid,-map 0 -c:v hevc_nvenc -pix_fmt p010le -rc:v vbr_hq -qmin 0 -cq:v 29 -preset slow -c:a copy -c:s copy`
+    }
+    else if (file.video_codec_name == 'h264') {
+      if (file.ffProbeData.streams[0].profile == 'High 10') {response.preset = `,-map 0 -c:v hevc_nvenc -pix_fmt p010le -rc:v vbr_hq -qmin 0 -cq:v 29 -preset slow -c:a copy -c:s copy`
+      }
+      else {response.preset = `-c:v h264_cuvid,-map 0 -c:v hevc_nvenc -pix_fmt p010le -rc:v vbr_hq -qmin 0 -cq:v 29 -preset slow -c:a copy -c:s copy`
+      }
+    }
+    else if (file.video_codec_name == 'mjpeg') {
+      response.preset = `-c:v mjpeg_cuvid,-map 0 -c:v hevc_nvenc -pix_fmt p010le -rc:v vbr_hq -qmin 0 -cq:v 29 -preset slow -c:a copy -c:s copy`
+    }
+    else if (file.video_codec_name == 'mpeg1') {
+      response.preset = `-c:v mpeg1_cuvid,-map 0 -c:v hevc_nvenc -pix_fmt p010le -rc:v vbr_hq -qmin 0 -cq:v 29 -preset slow -c:a copy -c:s copy`
+    }
+    else if (file.video_codec_name == 'mpeg2') {
+      response.preset = `-c:v mpeg2_cuvid,-map 0 -c:v hevc_nvenc -pix_fmt p010le -rc:v vbr_hq -qmin 0 -cq:v 29 -preset slow -c:a copy -c:s copy`
+    }
+    else if (file.video_codec_name == 'mpeg4') {
+      response.preset = `,-map 0 -c:v hevc_nvenc -pix_fmt p010le -rc:v vbr_hq -qmin 0 -cq:v 29 -preset slow -c:a copy -c:s copy`
+    }  
+    else if (file.video_codec_name == 'vc1') {
+      response.preset = `-c:v vc1_cuvid,-map 0 -c:v hevc_nvenc -pix_fmt p010le -rc:v vbr_hq -qmin 0 -cq:v 29 -preset slow -c:a copy -c:s copy`
+    }
+    else if (file.video_codec_name == 'vp8') {
+      response.preset = `-c:v vp8_cuvid,-map 0 -c:v hevc_nvenc -pix_fmt p010le -rc:v vbr_hq -qmin 0 -cq:v 29 -preset slow -c:a copy -c:s copy`
+    }
+    else if (file.video_codec_name == 'vp9') {
+      response.preset = `-c:v vp9_cuvid,-map 0 -c:v hevc_nvenc -pix_fmt p010le -rc:v vbr_hq -qmin 0 -cq:v 29 -preset slow -c:a copy -c:s copy`
+    }      
+    else {
+      response.preset = `,-map 0 -c:v hevc_nvenc -pix_fmt p010le -rc:v vbr_hq -qmin 0 -cq:v 29 -preset slow -c:a copy -c:s copy`
+    }
+ 
+    transcode = 1;
+  }
+ 
+//file will be encoded if the resolution is 720p
+//codec will be checked so it can be transcoded correctly
+  if(file.video_resolution === "720p") {
+    if (file.video_codec_name == 'h263') {
       response.preset = `-c:v h263_cuvid,-map 0 -c:v hevc_nvenc -pix_fmt p010le -rc:v vbr_hq -qmin 0 -cq:v 30 -preset slow -c:a copy -c:s copy`
     }
     else if (file.video_codec_name == 'h264') {
@@ -80,10 +120,10 @@ function plugin(file) {
  
     transcode = 1;
   }
- 
-//file will be encoded if the resolution is 720p
+   
+//file will be encoded if the resolution is 1080p
 //codec will be checked so it can be transcoded correctly
-  if(file.video_resolution === "720p") {
+  if(file.video_resolution === "1080p") {
     if (file.video_codec_name == 'h263') {
       response.preset = `-c:v h263_cuvid,-map 0 -c:v hevc_nvenc -pix_fmt p010le -rc:v vbr_hq -qmin 0 -cq:v 31 -preset slow -c:a copy -c:s copy`
     }
@@ -115,47 +155,7 @@ function plugin(file) {
       response.preset = `-c:v vp9_cuvid,-map 0 -c:v hevc_nvenc -pix_fmt p010le -rc:v vbr_hq -qmin 0 -cq:v 31 -preset slow -c:a copy -c:s copy`
     }      
     else {
-      response.preset = `,-map 0 -c:v hevc_nvenc -pix_fmt p010le -rc:v vbr_hq -qmin 0 -cq:v 31 -preset slow -c:a copy -c:s copy`
-    }
- 
-    transcode = 1;
-  }
-   
-//file will be encoded if the resolution is 1080p
-//codec will be checked so it can be transcoded correctly
-  if(file.video_resolution === "1080p") {
-    if (file.video_codec_name == 'h263') {
-      response.preset = `-c:v h263_cuvid,-map 0 -c:v hevc_nvenc -pix_fmt p010le -rc:v vbr_hq -qmin 0 -cq:v 32 -preset slow -c:a copy -c:s copy`
-    }
-    else if (file.video_codec_name == 'h264') {
-      if (file.ffProbeData.streams[0].profile == 'High 10') {response.preset = `,-map 0 -c:v hevc_nvenc -pix_fmt p010le -rc:v vbr_hq -qmin 0 -cq:v 32 -preset slow -c:a copy -c:s copy`
-      }
-      else {response.preset = `-c:v h264_cuvid,-map 0 -c:v hevc_nvenc -pix_fmt p010le -rc:v vbr_hq -qmin 0 -cq:v 32 -preset slow -c:a copy -c:s copy`
-      }
-    }
-    else if (file.video_codec_name == 'mjpeg') {
-      response.preset = `-c:v mjpeg_cuvid,-map 0 -c:v hevc_nvenc -pix_fmt p010le -rc:v vbr_hq -qmin 0 -cq:v 32 -preset slow -c:a copy -c:s copy`
-    }
-    else if (file.video_codec_name == 'mpeg1') {
-      response.preset = `-c:v mpeg1_cuvid,-map 0 -c:v hevc_nvenc -pix_fmt p010le -rc:v vbr_hq -qmin 0 -cq:v 32 -preset slow -c:a copy -c:s copy`
-    }
-    else if (file.video_codec_name == 'mpeg2') {
-      response.preset = `-c:v mpeg2_cuvid,-map 0 -c:v hevc_nvenc -pix_fmt p010le -rc:v vbr_hq -qmin 0 -cq:v 32 -preset slow -c:a copy -c:s copy`
-    }
-    else if (file.video_codec_name == 'mpeg4') {
-      response.preset = `,-map 0 -c:v hevc_nvenc -pix_fmt p010le -rc:v vbr_hq -qmin 0 -cq:v 32 -preset slow -c:a copy -c:s copy`
-    }  
-    else if (file.video_codec_name == 'vc1') {
-      response.preset = `-c:v vc1_cuvid,-map 0 -c:v hevc_nvenc -pix_fmt p010le -rc:v vbr_hq -qmin 0 -cq:v 32 -preset slow -c:a copy -c:s copy`
-    }
-    else if (file.video_codec_name == 'vp8') {
-      response.preset = `-c:v vp8_cuvid,-map 0 -c:v hevc_nvenc -pix_fmt p010le -rc:v vbr_hq -qmin 0 -cq:v 32 -preset slow -c:a copy -c:s copy`
-    }
-    else if (file.video_codec_name == 'vp9') {
-      response.preset = `-c:v vp9_cuvid,-map 0 -c:v hevc_nvenc -pix_fmt p010le -rc:v vbr_hq -qmin 0 -cq:v 32 -preset slow -c:a copy -c:s copy`
-    }      
-    else {
-      response.preset = `, -c:v hevc_nvenc -pix_fmt p010le -rc:v vbr_hq -qmin 0 -cq:v 32 -preset slow -c:a copy -c:s copy`
+      response.preset = `, -c:v hevc_nvenc -pix_fmt p010le -rc:v vbr_hq -qmin 0 -cq:v 31 -preset slow -c:a copy -c:s copy`
     }
  
     transcode = 1;
